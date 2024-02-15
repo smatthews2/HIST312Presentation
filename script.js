@@ -26,6 +26,43 @@ function clearSquares(){
         }
 }
 
+function swapColor(piece){
+    switch (true){
+        case piece.classList[0] == "evencircle": 
+            piece.classList.remove("evencircle");
+            piece.classList.add("oddcircle");
+            break;
+        case piece.classList[0] == "oddcircle": 
+            piece.classList.remove("oddcircle");
+            piece.classList.add("evencircle");
+            break;
+        case piece.classList[0] == "evensquare": 
+            piece.classList.remove("evensquare");
+            piece.classList.add("oddsquare");
+            break;
+        case piece.classList[0] == "oddsquare": 
+            piece.classList.remove("oddsquare");
+            piece.classList.add("evensquare");
+            break;
+        case piece.classList[0] == "oddtriangle": 
+            piece.classList.remove("oddtriangle");
+            piece.classList.add("eventriangle");
+            break;
+        case piece.classList[0] == "eventriangle": 
+            piece.classList.remove("eventriangle");
+            piece.classList.add("oddtriangle");
+            break;
+        case piece.classList[0] == "oddpyramid": 
+            piece.classList.remove("oddpyramid");
+            piece.classList.add("evenpyramid");
+            break;
+        case piece.classList[0] == "evenpyramid": 
+            piece.classList.remove("evenpyramid");
+            piece.classList.add("oddpyramid");
+            break;
+    }
+}
+
 // Move a given piece to a desired tile.
 function movePiece(tile){
     if(document.getElementById(tile).style.background == "gold" || document.getElementById(tile).style.background == "silver"){
@@ -41,40 +78,7 @@ function movePiece(tile){
             for(i = 1; i <= 8; i++){ // Send our opponent's piece to our back row and convert it.
                 let temp = document.getElementById(i.toString());
                 if(!temp.hasChildNodes()){
-                    switch (true){
-                        case document.getElementById(tile).children[0].classList[0] == "evencircle": 
-                            document.getElementById(tile).children[0].classList.remove("evencircle");
-                            document.getElementById(tile).children[0].classList.add("oddcircle");
-                            break;
-                        case document.getElementById(tile).children[0].classList[0] == "oddcircle": 
-                            document.getElementById(tile).children[0].classList.remove("oddcircle");
-                            document.getElementById(tile).children[0].classList.add("evencircle");
-                            breakl
-                        case document.getElementById(tile).children[0].classList[0] == "evensquare": 
-                            document.getElementById(tile).children[0].classList.remove("evensquare");
-                            document.getElementById(tile).children[0].classList.add("oddsquare");
-                            break;
-                        case document.getElementById(tile).children[0].classList[0] == "oddsquare": 
-                            document.getElementById(tile).children[0].classList.remove("oddsquare");
-                            document.getElementById(tile).children[0].classList.add("evensquare");
-                            break;
-                        case document.getElementById(tile).children[0].classList[0] == "oddtriangle": 
-                            document.getElementById(tile).children[0].classList.remove("oddtriangle");
-                            document.getElementById(tile).children[0].classList.add("eventriangle");
-                            break;
-                        case document.getElementById(tile).children[0].classList[0] == "eventriangle": 
-                            document.getElementById(tile).children[0].classList.remove("eventriangle");
-                            document.getElementById(tile).children[0].classList.add("oddtriangle");
-                            break;
-                        case document.getElementById(tile).children[0].classList[0] == "oddpyramid": 
-                            document.getElementById(tile).children[0].classList.remove("oddpyramid");
-                            document.getElementById(tile).children[0].classList.add("evenpyramid");
-                            break;
-                        case document.getElementById(tile).children[0].classList[0] == "evenpyramid": 
-                            document.getElementById(tile).children[0].classList.remove("evenpyramid");
-                            document.getElementById(tile).children[0].classList.add("oddpyramid");
-                            break;
-                    }
+                    swapColor(document.getElementById(tile).children[0]);
                     temp.appendChild(document.getElementById(document.getElementById(tile).children[0].id));
                     break;
                 }
@@ -84,6 +88,7 @@ function movePiece(tile){
             for(i = 121; i <= 128; i++){
                 let temp = document.getElementById(i.toString());
                 if(!temp.hasChildNodes()){
+                    swapColor(document.getElementById(tile).children[0]);
                     temp.appendChild(document.getElementById(document.getElementById(tile).children[0].id));
                     break;
                 }
