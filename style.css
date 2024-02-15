@@ -15,6 +15,15 @@ h1#textlogo {
     background-color: white;
 }
 
+h1 {
+    text-align: center;
+}
+
+img {
+    margin: 30px;
+    display: inline-block;
+}
+
 #mainBoard {
     /* Board is in a 1:2 aspect ratio. */
     width: 480px;
@@ -22,7 +31,26 @@ h1#textlogo {
     border: 1px solid black;
 }
 
-div {
+/* Formatting for main page. */
+
+div#container {
+    display: flex;
+    flex-direction: row;
+}
+
+div#main {
+    flex: 0 1 30%;
+    margin: 30px
+}
+
+div#aside {
+    background: brown;
+    flex: 0 1 70%;
+    height: 50%;
+}
+
+/* Below is tile and piece styling. */
+div.tile {
  width:60px;
  height:60px;
  float:left;
