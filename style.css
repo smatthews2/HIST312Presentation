@@ -1,0 +1,108 @@
+body {
+    background-image: url("background.jpg");
+    background-attachment: fixed;
+    background-size: 20% 100%;
+}
+
+p, ul>li {
+ font-size: 20pt;
+ color: white;
+}
+
+h1#textlogo {
+    font-size: 40pt;
+    text-align: center;
+    background-color: white;
+}
+
+#mainBoard {
+    /* Board is in a 1:2 aspect ratio. */
+    width: 480px;
+    height: 960px;
+    border: 1px solid black;
+}
+
+div {
+ width:60px;
+ height:60px;
+ float:left;
+ position: relative;
+}
+
+div.evencircle {
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
+    background: tan;
+    position: absolute;
+    text-align: center;
+    margin: 3px;
+}
+
+div.oddcircle {
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
+    background: brown;
+    position: absolute;
+    text-align: center;
+    margin: 3px;
+}
+
+div.eventriangle {
+    width: 0;
+    height: 0;
+    border-left: 27px solid transparent;
+    border-right: 27px solid transparent;
+    border-bottom: 54px solid tan;
+    position: absolute;
+    text-align: center;
+    margin: 3px;
+}
+
+div.oddtriangle {
+    width: 0;
+    height: 0;
+    border-left: 27px solid transparent;
+    border-right: 27px solid transparent;
+    border-top: 54px solid brown;
+    position: absolute;
+    text-align: center;
+    margin: 3px;
+}
+
+div.evensquare {
+    width: 90%;
+    height: 90%;
+    background: tan;
+    position: absolute;
+    text-align: center;
+    margin: 3px;
+}
+
+div.oddsquare {
+    width: 90%;
+    height: 90%;
+    background: brown;
+    position: absolute;
+    text-align: center;
+    margin: 3px;
+}
+
+div.evenpyramid {
+	border-bottom: 54px solid tan;
+	border-left: 12px solid transparent;
+	border-right: 12px solid transparent;
+	height: 0;
+	width: 30px;
+    margin: 3px;
+}
+
+div.oddpyramid {
+	border-bottom: 54px solid brown;
+	border-left: 12px solid transparent;
+	border-right: 12px solid transparent;
+	height: 0;
+	width: 30px;
+    margin: 3px;
+}
