@@ -203,7 +203,7 @@ function validMoves(){
                 }                  
                 
                 for(i = 0; i < knightmoves.length; i++){
-                    if(!(knightmoves[i] === null) && !knightmoves[i].hasChildNodes() && (i % 2 == 0 ? !((curPos % 8 == 1|| curPos % 8 == 2 && i != 0 && i != 2 )) : !((curPos % 8 == 7 && i != 1 && i != 3|| curPos % 8 == 0)))) knightmoves[i].style.background = "silver";
+                    if(!(knightmoves[i] === null) && !knightmoves[i].hasChildNodes() && (i % 2 == 0 ? !((curPos % 8 == 1|| curPos % 8 == 2 && i != 0 && i != 2 )) : !((curPos % 8 == 7 && i != 1 && i != 3 || curPos % 8 == 0)))) knightmoves[i].style.background = "silver";
                 }
                 
                 unblocked.fill(true);
@@ -224,6 +224,7 @@ function pieceHelper(piece){
 
 // BUILD THE BOARD!
 function assembleBoard(){
+    gameTurn = 0;
     let j = 0;
 
     for (var i = 0; i < 128; i++){
@@ -231,7 +232,7 @@ function assembleBoard(){
         tile.style.backgroundColor = parseInt((i / 8) + i) % 2 == 0 ? "green" : "beige";  
         if(tile.id % 8 == 0 || tile.id % 8 == 1)
         tile.addEventListener("click", function () {
-            console.log(tile.id);
+            console.log("tile " + tile.id);
             movePiece(tile.id);
         });
         tile.setAttribute("id", i + 1);
@@ -333,3 +334,14 @@ function assembleBoard(){
         if (!(element.classList[0] === undefined)) element.classList[0].includes("odd") || element.classList[0].includes("even") ? pieceHelper(element) : {};
     });
 } 
+
+// Do what it says on the tin.
+function resetGame(){
+    const myNode = document.getElementById("mainBoard");
+    
+    while (myNode.lastElementChild) {
+        myNode.removeChild(myNode.lastElementChild);
+    }
+
+    assembleBoard();
+}
