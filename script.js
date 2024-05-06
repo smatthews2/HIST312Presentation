@@ -1,4 +1,4 @@
-// Wait until DOM is loaded, then render the Rithmomachia board.
+// Wait until DOM is loaded, then render the game board.
 window.addEventListener("DOMContentLoaded", function() {
     assembleBoard();
 });
@@ -14,6 +14,18 @@ let odds = [[9, 7, 5, 3, 81, 49, 25, 9], // Circles
             [100, 90, 12, 16, 64, 56, 30, 36], // Triangles
             [190, 120, 66, 28, 136, 225, 121, 49] // Squares and Pyramid
            ]
+
+let hnefataflPos = [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+                    [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
+                    [23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33],
+                    [34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44], 
+                    [45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55], 
+                    [56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66], 
+                    [67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77], 
+                    [78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88], 
+                    [89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99], 
+                    [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110], 
+                    [111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121]];
 
 // Be nice and declare all your variables at the top of the page.
 var lastClicked = "";
@@ -211,50 +223,74 @@ function validMoves(){
             }
         }
     }else if(document.getElementById('hnefatafl').checked){
-        switch(true){
-            case lastClicked.includes("square"):
-                    let unblocked = new Array(4).fill(true);
-
-                    let knightmoves = [
-                        document.getElementById((curPos - 8 * 3 - 1)), // 3 1 up left
-                        document.getElementById((curPos - 8 * 3 + 1)), // 3 1 up right
-                        document.getElementById(((parseInt(curPos) + 8 * 3 - 1))), // 3 1 down left
-                        document.getElementById(((parseInt(curPos) + 8 * 3 + 1))), // 3 1 down right
-                        document.getElementById((curPos - 3 - 8)), // 1 3 up left
-                        document.getElementById((parseInt(curPos) + 3 - 8)), // 1 3 up right
-                        document.getElementById((curPos - 3 + 8)), // 1 3 down left
-                        document.getElementById((parseInt(curPos) + 3 + 8)) // 1 3 down right
-                    ];
-
-                    for(i = 1; i <= 3; i++){
-                        let up = document.getElementById((curPos - 8 * i));
-                        let down = document.getElementById((parseInt(curPos) + 8 * i));
-                        let left = document.getElementById((curPos - i));
-                        let right = document.getElementById(((parseInt(curPos) + i)));
-                        
-                        if(i == 3){
-                            if(!(up === null) && unblocked[0]) !up.hasChildNodes() ? up.style.background = "gold" : (!isSame(up) ? up.style.background = "red" : {} );
-                            if(!(down === null) && unblocked[1]) !down.hasChildNodes() ? down.style.background = "gold" : (!isSame(down) ? down.style.background = "red" : {} );
-                            if(!(left === null) && unblocked[2] && !(curPos % 8 == 1 || curPos % 8 == 2 || curPos % 8 == 3)) !left.hasChildNodes() ? left.style.background = "gold" : (!isSame(left) ? left.style.background = "red" : {} );
-                            if(!(right === null) && unblocked[3] && !(curPos % 8 == 6 || curPos % 8 == 7 || curPos % 8 == 0)) !right.hasChildNodes() ? right.style.background = "gold" : (!isSame(right) ? right.style.background = "red" : {} );
-                        }
-                        else{
-                            if(!(up === null) && up.hasChildNodes()) unblocked[0] = false;
-                            if(!(down === null) && down.hasChildNodes()) unblocked[1] = false;
-                            if(!(left === null) && left.hasChildNodes()) unblocked[2] = false;
-                            if(!(right === null) && right.hasChildNodes()) unblocked[3] = false;
-                        } 
-                    }
-
-                    for(i = 0; i < knightmoves.length; i++){ // Check if a knight move is valid.
-                        if(!(knightmoves[i] === null) && !knightmoves[i].hasChildNodes() && (i % 2 == 0 ? !((curPos % 8 == 1 || curPos % 8 == 2 && i != 0 && i != 2 || curPos % 8 == 3 && i != 0 && i != 2)) : !((curPos % 8 == 6 && i != 1 && i != 3 || curPos % 8 == 7 && i != 1 && i != 3 || curPos % 8 == 0)))) knightmoves[i].style.background = "silver";
-                    }
-
-                    unblocked.fill(true);
-                    if(lastClicked.includes("square")) break;
-        }
+        let curPos = document.getElementById(lastClicked).parentElement.id;
+        let temp = findIndex(hnefataflPos, curPos);
+        let unblocked = new Array(4).fill(true);
+        // Find row by curPos.    
+        let row = range(hnefataflPos[temp[0]][0], hnefataflPos[temp[0]][10]);
+        
+        for(i = 1; i <= 11; i++){
+            let up = document.getElementById((curPos - 11 * i));
+            let down = document.getElementById((parseInt(curPos) + 11 * i));
+            let left = document.getElementById((curPos - i));
+            let right = document.getElementById((parseInt(curPos) + i));
             
+            if(!(up === null) && up.hasChildNodes()) unblocked[0] = false;
+            if(!(down === null) && down.hasChildNodes()) unblocked[1] = false;
+            if(!(left === null) && left.hasChildNodes()) unblocked[2] = false;
+            if(!(right === null) && right.hasChildNodes()) unblocked[3] = false;
+
+            // Only the king can be on the center tile.
+            if(!lastClicked.includes("king")){
+                if((curPos - 11 * i) == 61) unblocked[0] = false;   
+                if((parseInt(curPos) + 11 * i) == 61) unblocked[1] = false;  
+                if((curPos - i) == 61) unblocked[2] = false;  
+                if((parseInt(curPos) + i) == 61) unblocked[3] = false;   
+            }
+            
+            if(!(up === null) && unblocked[0]) !up.hasChildNodes() ? up.style.background = "gold" : {};
+            if(!(down === null) && unblocked[1]) !down.hasChildNodes() ? down.style.background = "gold" : {};
+            if(!(left === null) && unblocked[2] && row.includes(curPos - i)) !left.hasChildNodes() ? left.style.background = "gold" : {};
+            if(!(right === null) && unblocked[3] && row.includes(parseInt(curPos) + i)) !right.hasChildNodes() ? right.style.background = "gold" : {};
+        }
+
+        unblocked.fill(true);
     }
+}
+
+function findIndex(stringArr,keyString)
+{
+ 
+    // Initialising result array to -1
+    // in case keyString is not found
+    let result = [ -1, -1 ];
+ 
+    // Iteration over all the elements
+    // of the 2-D array
+ 
+    // Rows
+    for (let i = 0; i < stringArr.length; i++) {
+ 
+        // Columns
+        for (let j = 0; j < stringArr[i].length; j++) {
+ 
+            // If keyString is found
+            if (stringArr[i][j] == keyString) {
+                result[0] = i;
+                result[1] = j;
+                return result;
+            }
+        }
+    }
+ 
+    // If keyString is not found
+    // then -1 is returned
+    return result;
+}
+
+function range(start, end) {
+    if(start === end) return [start];
+    return [start, ...range(start + 1, end)];
 }
 
 // Put listeners on each of the pieces dynamically.
@@ -394,7 +430,7 @@ function assembleHnefataflBoard(){
             movePiece(tile.id);
         });
         tile.setAttribute("id", i + 1);
-        tile.setAttribute("class", "tile");
+        tile.setAttribute("class", "tile");        
     }
 
     // Place down circles for attackers.
@@ -402,7 +438,7 @@ function assembleHnefataflBoard(){
         if(!(i <= 112 && i >= 106)){
             let circle = document.getElementById(i).appendChild(document.createElement("div"));
             circle.setAttribute("class", "attacker");
-            circle.setAttribute("id", "attacker " + j);
+            circle.setAttribute("id", 1 + " attacker " + j);
             j++;    
         }
     }
@@ -412,7 +448,7 @@ function assembleHnefataflBoard(){
         if(!(i < 17 && i >= 10)){
             let circle = document.getElementById(i).appendChild(document.createElement("div"));
             circle.setAttribute("class", "attacker");
-            circle.setAttribute("id", "attacker " + j);
+            circle.setAttribute("id", 2 + " attacker " + j);
             j++;    
         }
     }
@@ -422,7 +458,7 @@ function assembleHnefataflBoard(){
         if((i % 11 == 1) || i == 57){
             let circle = document.getElementById(i).appendChild(document.createElement("div"));
             circle.setAttribute("class", "attacker");
-            circle.setAttribute("id", "attacker " + j);
+            circle.setAttribute("id", 3 + " attacker " + j);
             j++;    
         }   
     }
@@ -432,7 +468,7 @@ function assembleHnefataflBoard(){
         if((i % 11 == 0) || i == 65){
             let circle = document.getElementById(i).appendChild(document.createElement("div"));
             circle.setAttribute("class", "attacker");
-            circle.setAttribute("id", "attacker " + j);
+            circle.setAttribute("id", 4 + " attacker " + j);
             j++;    
         }   
     }
