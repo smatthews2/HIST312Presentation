@@ -31,6 +31,10 @@ img {
     border: 1px solid black;
 }
 
+#controlPanel {
+    background: white;
+}
+
 /* Formatting for main page. */
 
 div#container {
@@ -158,7 +162,7 @@ div.defender {
     margin: 3px;
 }
 
-div.king {
+div.defender-king {
     width: 90%;
     height: 90%;
     background: red;

@@ -79,9 +79,9 @@ function swapColor(piece){
 
 // Move a given piece to a desired tile.
 function movePiece(tile){
-    // if((document.getElementById(lastClicked).classList[0].includes("odd") && gameTurn % 2 == 0) || (document.getElementById(lastClicked).classList[0].includes("even") && gameTurn % 2 == 1))
     if(document.getElementById(tile).style.background == "gold" || document.getElementById(tile).style.background == "silver"){
         document.getElementById(tile).appendChild(document.getElementById(lastClicked));
+        if (document.getElementById('hnefatafl').checked) captureHnefatafl();
         clearSquares();
         gameTurn++;
         console.log(gameTurn);
@@ -116,6 +116,10 @@ function movePiece(tile){
 
 function isSame(position){
     return position.children[0].classList[0].includes("odd") == document.getElementById(lastClicked).classList[0].includes("odd") || position.children[0].classList[0].includes("even") == document.getElementById(lastClicked).classList[0].includes("even");
+}
+
+function isSameHnefatafl(position){
+    return position.children[0].classList[0].includes("defender") == document.getElementById(lastClicked).classList[0].includes("defender") || position.children[0].classList[0].includes("attacker") == document.getElementById(lastClicked).classList[0].includes("attacker");
 }
 
 /*
@@ -222,7 +226,7 @@ function validMoves(){
                 unblocked.fill(true);
             }
         }
-    }else if(document.getElementById('hnefatafl').checked){
+    }else if(document.getElementById('hnefatafl').checked && (document.getElementById(lastClicked).classList[0].includes("defender") && gameTurn % 2 == 0) || (document.getElementById(lastClicked).classList[0].includes("attacker") && gameTurn % 2 == 1)){ // If we're playing Hnefatafl instead...
         let curPos = document.getElementById(lastClicked).parentElement.id;
         let temp = findIndex(hnefataflPos, curPos);
         let unblocked = new Array(4).fill(true);
@@ -253,14 +257,98 @@ function validMoves(){
             if(!(left === null) && unblocked[2] && row.includes(curPos - i)) !left.hasChildNodes() ? left.style.background = "gold" : {};
             if(!(right === null) && unblocked[3] && row.includes(parseInt(curPos) + i)) !right.hasChildNodes() ? right.style.background = "gold" : {};
         }
-
+        
         unblocked.fill(true);
+    }
+}
+
+// Find the column of a given array.
+const arrayColumn = (arr, n) => arr.map(x => x[n]);
+let captureKey = [true, false, true];
+
+
+function captureHnefatafl(){
+    let curPos = document.getElementById(lastClicked).parentElement.id;
+    let temp = findIndex(hnefataflPos, curPos);
+    // console.log(temp);
+
+    let row = range(hnefataflPos[temp[0]][0], hnefataflPos[temp[0]][10]);
+    let col = arrayColumn(hnefataflPos, temp[1]);
+    // console.log(col);
+
+    let captureUp = new Array(3).fill(false);
+    let captureDown = new Array(3).fill(false);
+    let captureLeft = new Array(3).fill(false);
+    let captureRight = new Array(3).fill(false);
+
+    for(let i = 0; i <= 2; i++){
+        let up = document.getElementById((curPos - 11 * i));
+        let down = document.getElementById((parseInt(curPos) + 11 * i));
+        let left = document.getElementById((curPos - i));
+        let right = document.getElementById((parseInt(curPos) + i));
+
+        if(!(up === null) && up.hasChildNodes()) captureUp[i] = isSameHnefatafl(up);
+        if(!(down === null) && down.hasChildNodes()) captureDown[i] = isSameHnefatafl(down);
+        if(!(left === null) && left.hasChildNodes()) captureLeft[i] = isSameHnefatafl(left);
+        if(!(right === null) && right.hasChildNodes()) captureRight[i] = isSameHnefatafl(right);
+        
+        let middle = document.getElementById((curPos - 11));
+        if (captureUp.toString() === captureKey.toString() && i == 2 && middle.hasChildNodes()){
+            middle.removeChild(middle.firstChild);
+        }
+        
+        middle = document.getElementById((parseInt(curPos) + 11));
+        if (captureDown.toString() === captureKey.toString() && i == 2 && middle.hasChildNodes()){  
+            middle.removeChild(middle.firstChild);
+        }
+        
+        middle = document.getElementById((curPos - 1));
+        if (captureLeft.toString() === captureKey.toString() && i == 2 && middle.hasChildNodes()){
+            middle.removeChild(middle.firstChild);
+        }
+        
+        middle = document.getElementById((parseInt(curPos) + 1));
+        if (captureRight.toString() === captureKey.toString() && i == 2 && middle.hasChildNodes()){    
+            middle.removeChild(middle.firstChild);
+        }
+    }
+
+    checkVictory();
+}
+
+function checkVictory(){
+
+    // Find position of king and see if he's on the outer perimeter.
+
+    // Check to see if the king was captured.
+    const myNode = document.getElementById("mainBoard");
+    let noKing = true;
+    let kingEscaped = false;
+    // while (myNode.lastElementChild) {
+    //     if(Array.from(myNode.children).includes(document.getElementById("king"))){ 
+    //         break;
+    //     }else{
+    //         alert("Attackers win!");
+    //     };
+    // }
+
+    for(var i = 0; i < document.getElementById("mainBoard").childElementCount; i++){
+        if(Array.from(document.getElementById("mainBoard").children[i].children).includes(document.getElementById("king"))) noKing = false;  
+    }
+
+    if(noKing){
+        alert("Attackers win!");
+        while (myNode.lastElementChild) {
+            removeEventListener(getEventListeners(myNode.lastElementChild), myNode.lastElementChild);
+        }
+    }
+    else if(kingEscaped){
+        alert("Defenders win!");
     }
 }
 
 function findIndex(stringArr,keyString)
 {
- 
     // Initialising result array to -1
     // in case keyString is not found
     let result = [ -1, -1 ];
@@ -484,7 +572,7 @@ function assembleHnefataflBoard(){
         }
         else if(i == 61){
             let circle = document.getElementById(i).appendChild(document.createElement("div"));
-            circle.setAttribute("class", "king");
+            circle.setAttribute("class", "defender-king");
             circle.setAttribute("id", "king");   
         }
     }
@@ -493,8 +581,9 @@ function assembleHnefataflBoard(){
     list = [...document.getElementsByTagName("div")];
 
     list.forEach(element => { 
-        if (!(element.classList[0] === undefined)) element.classList[0].includes("king") || element.classList[0].includes("defender") || element.classList[0].includes("attacker") ? pieceHelper(element) : {};
+        if (!(element.classList[0] === undefined)) element.classList[0].includes("defender") || element.classList[0].includes("attacker") ? pieceHelper(element) : {};
     });
+    //element.classList[0].includes("king") || 
 }
 
 // Do what it says on the tin.
