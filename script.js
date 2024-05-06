@@ -18,12 +18,13 @@ let odds = [[9, 7, 5, 3, 81, 49, 25, 9], // Circles
 // Be nice and declare all your variables at the top of the page.
 var lastClicked = "";
 var gameTurn = 0;
+var denom = 8; // This is for tile color.
 var list;
 
 function clearSquares(){
     // THIS IS SO SLOW!
-        for(var i = 0; i < 128; i++){
-            document.getElementById("mainBoard").children[i].style.backgroundColor = parseInt((i / 8) + i) % 2 == 0 ? "green" : "beige";  
+        for(var i = 0; i < document.getElementById("mainBoard").childElementCount; i++){
+            document.getElementById("mainBoard").children[i].style.backgroundColor = parseInt((i / denom) + i) % 2 == 0 ? "green" : "beige";  
         }
 }
 
@@ -209,6 +210,50 @@ function validMoves(){
                 unblocked.fill(true);
             }
         }
+    }else if(document.getElementById('hnefatafl').checked){
+        switch(true){
+            case lastClicked.includes("square"):
+                    let unblocked = new Array(4).fill(true);
+
+                    let knightmoves = [
+                        document.getElementById((curPos - 8 * 3 - 1)), // 3 1 up left
+                        document.getElementById((curPos - 8 * 3 + 1)), // 3 1 up right
+                        document.getElementById(((parseInt(curPos) + 8 * 3 - 1))), // 3 1 down left
+                        document.getElementById(((parseInt(curPos) + 8 * 3 + 1))), // 3 1 down right
+                        document.getElementById((curPos - 3 - 8)), // 1 3 up left
+                        document.getElementById((parseInt(curPos) + 3 - 8)), // 1 3 up right
+                        document.getElementById((curPos - 3 + 8)), // 1 3 down left
+                        document.getElementById((parseInt(curPos) + 3 + 8)) // 1 3 down right
+                    ];
+
+                    for(i = 1; i <= 3; i++){
+                        let up = document.getElementById((curPos - 8 * i));
+                        let down = document.getElementById((parseInt(curPos) + 8 * i));
+                        let left = document.getElementById((curPos - i));
+                        let right = document.getElementById(((parseInt(curPos) + i)));
+                        
+                        if(i == 3){
+                            if(!(up === null) && unblocked[0]) !up.hasChildNodes() ? up.style.background = "gold" : (!isSame(up) ? up.style.background = "red" : {} );
+                            if(!(down === null) && unblocked[1]) !down.hasChildNodes() ? down.style.background = "gold" : (!isSame(down) ? down.style.background = "red" : {} );
+                            if(!(left === null) && unblocked[2] && !(curPos % 8 == 1 || curPos % 8 == 2 || curPos % 8 == 3)) !left.hasChildNodes() ? left.style.background = "gold" : (!isSame(left) ? left.style.background = "red" : {} );
+                            if(!(right === null) && unblocked[3] && !(curPos % 8 == 6 || curPos % 8 == 7 || curPos % 8 == 0)) !right.hasChildNodes() ? right.style.background = "gold" : (!isSame(right) ? right.style.background = "red" : {} );
+                        }
+                        else{
+                            if(!(up === null) && up.hasChildNodes()) unblocked[0] = false;
+                            if(!(down === null) && down.hasChildNodes()) unblocked[1] = false;
+                            if(!(left === null) && left.hasChildNodes()) unblocked[2] = false;
+                            if(!(right === null) && right.hasChildNodes()) unblocked[3] = false;
+                        } 
+                    }
+
+                    for(i = 0; i < knightmoves.length; i++){ // Check if a knight move is valid.
+                        if(!(knightmoves[i] === null) && !knightmoves[i].hasChildNodes() && (i % 2 == 0 ? !((curPos % 8 == 1 || curPos % 8 == 2 && i != 0 && i != 2 || curPos % 8 == 3 && i != 0 && i != 2)) : !((curPos % 8 == 6 && i != 1 && i != 3 || curPos % 8 == 7 && i != 1 && i != 3 || curPos % 8 == 0)))) knightmoves[i].style.background = "silver";
+                    }
+
+                    unblocked.fill(true);
+                    if(lastClicked.includes("square")) break;
+        }
+            
     }
 }
 
@@ -224,13 +269,16 @@ function pieceHelper(piece){
 
 // BUILD THE BOARD!
 function assembleBoard(){
+    denom = 8;
     gameTurn = 0;
     let j = 0;
 
+    document.getElementById("mainBoard").style['width'] = "480px";
+    document.getElementById("mainBoard").style['height'] = "960px";
+
     for (var i = 0; i < 128; i++){
         let tile = document.getElementById("mainBoard").appendChild(document.createElement("div"));
-        tile.style.backgroundColor = parseInt((i / 8) + i) % 2 == 0 ? "green" : "beige";  
-        if(tile.id % 8 == 0 || tile.id % 8 == 1)
+        tile.style.backgroundColor = parseInt((i / denom) + i) % 2 == 0 ? "green" : "beige";  
         tile.addEventListener("click", function () {
             console.log("tile " + tile.id);
             movePiece(tile.id);
@@ -245,7 +293,6 @@ function assembleBoard(){
             let circle = document.getElementById(i).appendChild(document.createElement("div"));
             circle.setAttribute("class", "evencircle");
             circle.setAttribute("id", evens[0][j] + " white circle " + j);
-            // pieceHelper(circle);
             circle.innerHTML = evens[0][j];
             j++;    
         }
@@ -258,7 +305,6 @@ function assembleBoard(){
             let triangle = document.getElementById(i).appendChild(document.createElement("div"));
             triangle.setAttribute("class", "eventriangle");
             triangle.setAttribute("id", evens[1][j] + " white triangle " + j);
-            // pieceHelper(triangle);
             triangle.innerHTML = evens[1][j];
             j++;    
         }
@@ -277,7 +323,6 @@ function assembleBoard(){
                 square.setAttribute("class", "evensquare");
                 square.setAttribute("id", evens[2][j] + " white square " + j);
             }
-            // pieceHelper(square);
             square.innerHTML = evens[2][j];
             j++
         }
@@ -290,7 +335,6 @@ function assembleBoard(){
             let circle = document.getElementById(i).appendChild(document.createElement("div"));
             circle.setAttribute("class", "oddcircle");
             circle.setAttribute("id", odds[0][j] + " black circle " + j);
-            // pieceHelper(circle);
             circle.innerHTML = odds[0][j];
             j++;    
         }
@@ -303,7 +347,6 @@ function assembleBoard(){
             let triangle = document.getElementById(i).appendChild(document.createElement("div"));
             triangle.setAttribute("class", "oddtriangle");
             triangle.setAttribute("id", odds[1][j] + " black triangle " + j);
-            // pieceHelper(triangle);
             triangle.innerHTML = odds[1][j];
             j++;    
         }
@@ -322,7 +365,6 @@ function assembleBoard(){
                 square.setAttribute("class", "oddsquare");
                 square.setAttribute("id", odds[2][j] + " black square " + j);
             }
-            // pieceHelper(square);
             square.innerHTML = odds[2][j];
             j++
         }
@@ -335,13 +377,105 @@ function assembleBoard(){
     });
 } 
 
+// BUILD THE BOARD!
+function assembleHnefataflBoard(){
+    denom = 121;
+    gameTurn = 0;
+    let j = 0;
+
+    document.getElementById("mainBoard").style['width'] = "660px";
+    document.getElementById("mainBoard").style['height'] = "660px";
+
+    for (var i = 0; i < 121; i++){
+        let tile = document.getElementById("mainBoard").appendChild(document.createElement("div"));
+        tile.style.backgroundColor = parseInt((i / denom) + i) % 2 == 0 ? "green" : "beige";  
+        tile.addEventListener("click", function () {
+            console.log("tile " + tile.id);
+            movePiece(tile.id);
+        });
+        tile.setAttribute("id", i + 1);
+        tile.setAttribute("class", "tile");
+    }
+
+    // Place down circles for attackers.
+    for(i = 119; i >= 105; i--){
+        if(!(i <= 112 && i >= 106)){
+            let circle = document.getElementById(i).appendChild(document.createElement("div"));
+            circle.setAttribute("class", "attacker");
+            circle.setAttribute("id", "attacker " + j);
+            j++;    
+        }
+    }
+    j = 0;
+
+    for(i = 17; i >= 3; i--){
+        if(!(i < 17 && i >= 10)){
+            let circle = document.getElementById(i).appendChild(document.createElement("div"));
+            circle.setAttribute("class", "attacker");
+            circle.setAttribute("id", "attacker " + j);
+            j++;    
+        }
+    }
+    j = 0;
+
+    for(i = 89; i >= 23; i--){
+        if((i % 11 == 1) || i == 57){
+            let circle = document.getElementById(i).appendChild(document.createElement("div"));
+            circle.setAttribute("class", "attacker");
+            circle.setAttribute("id", "attacker " + j);
+            j++;    
+        }   
+    }
+    j = 0;
+
+    for(i = 99; i >= 33; i--){
+        if((i % 11 == 0) || i == 65){
+            let circle = document.getElementById(i).appendChild(document.createElement("div"));
+            circle.setAttribute("class", "attacker");
+            circle.setAttribute("id", "attacker " + j);
+            j++;    
+        }   
+    }
+    j = 0;
+
+    // Place down circles for defenders.
+    for(i = 83; i >= 39; i--){
+        if((((i % 11 == 7) || (i % 11 == 6) || (i % 11 == 5)) && ((i != 61) && (i != 40) && (i != 82))) || (i == 63) || (i == 59)){
+            let circle = document.getElementById(i).appendChild(document.createElement("div"));
+            circle.setAttribute("class", "defender");
+            circle.setAttribute("id", "defender " + j);
+            j++;    
+        }
+        else if(i == 61){
+            let circle = document.getElementById(i).appendChild(document.createElement("div"));
+            circle.setAttribute("class", "king");
+            circle.setAttribute("id", "king");   
+        }
+    }
+    j = 0;
+
+    list = [...document.getElementsByTagName("div")];
+
+    list.forEach(element => { 
+        if (!(element.classList[0] === undefined)) element.classList[0].includes("king") || element.classList[0].includes("defender") || element.classList[0].includes("attacker") ? pieceHelper(element) : {};
+    });
+}
+
 // Do what it says on the tin.
 function resetGame(){
     const myNode = document.getElementById("mainBoard");
     
+    // Clear the container for the board.
     while (myNode.lastElementChild) {
         myNode.removeChild(myNode.lastElementChild);
     }
 
-    assembleBoard();
+    if(document.getElementById('rithmomachia').checked) {
+        console.log("Rithmomachia!");
+        assembleBoard();
+    }
+    else if(document.getElementById('hnefatafl').checked) {
+        console.log("Hnefatafl!");
+        assembleHnefataflBoard();
+    }
 }

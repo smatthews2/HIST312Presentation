@@ -49,7 +49,7 @@ div#aside {
     height: 50%;
 }
 
-/* Below is tile and piece styling. */
+/* Below is tile and piece styling for Rithmomachia. */
 
 div.tile {
  width:60px;
@@ -133,5 +133,36 @@ div.oddpyramid {
 	border-right: 12px solid transparent;
 	height: 0;
 	width: 30px;
+    margin: 3px;
+}
+
+/* Below is piece styling for Hnefatafl. */
+
+div.attacker {
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
+    background: black;
+    position: absolute;
+    text-align: center;
+    margin: 3px;
+}
+
+div.defender {
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
+    background: red;
+    position: absolute;
+    text-align: center;
+    margin: 3px;
+}
+
+div.king {
+    width: 90%;
+    height: 90%;
+    background: red;
+    position: absolute;
+    text-align: center;
     margin: 3px;
 }
