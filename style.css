@@ -1,5 +1,5 @@
 body {
-    background-image: url("background.jpg");
+    background-image: url("Resources/background.jpg");
     background-attachment: fixed;
     background-size: 20% 100%;
 }
@@ -19,9 +19,23 @@ h1 {
     text-align: center;
 }
 
+h2#author {
+    text-align: center;
+    background-color: brown;
+    color: white;
+}
+
+figcaption {
+    color: white;
+
+}
+
 img {
-    margin: 30px;
+    width: 33%;
+    height: 33%;
+    margin: 30px 30px 0px 0px;
     display: inline-block;
+    object-fit: contain;
 }
 
 #mainBoard {
@@ -170,3 +184,72 @@ div.defender-king {
     text-align: center;
     margin: 3px;
 }
+
+/* Below is styling for the timeline. */
+
+.timeline {
+    height: 250px;
+    margin: 1em;
+    line-height: 250px;
+    position: relative;
+    text-align: center;
+  }
+  .timeline:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 0%;
+    height: 26px;
+    margin-top: -13px;
+    background: blue;
+  }
+  .event {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    margin: 0 50px;
+    display: inline-block;
+    background: #e59741; /* Old browsers */
+    background: -moz-linear-gradient(-45deg,  #e59741 21%, #c22d0b 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg,  #e59741 21%,#c22d0b 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg,  #e59741 21%,#c22d0b 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    border-radius: 50%;
+    color: white;
+    font-size:14px;
+    vertical-align: middle;
+    border-radius: 50%;
+  }
+  .detail {
+    position: absolute;
+    background: brown;
+    line-height: 3em;
+    white-space: nowrap;
+    left: 100%;
+  }
+  .event:before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    margin-left: -3px;
+    width: 6px;
+    background: greenyellow;
+    height: 50px;
+  }
+
+  .event:hover{
+    background: red; /* Old browsers */
+  }
+
+  .event.up:before {
+    top: -100%;
+  }
+  .event.down:before {
+    top: 100%;
+  }
+  .up .detail {
+    top: -50px;
+  }
+  .down .detail {
+    bottom: -50px;
+  }

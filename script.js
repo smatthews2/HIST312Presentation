@@ -317,30 +317,30 @@ function captureHnefatafl(){
 }
 
 function checkVictory(){
-
-    // Find position of king and see if he's on the outer perimeter.
-
     // Check to see if the king was captured.
     const myNode = document.getElementById("mainBoard");
     let noKing = true;
     let kingEscaped = false;
-    // while (myNode.lastElementChild) {
-    //     if(Array.from(myNode.children).includes(document.getElementById("king"))){ 
-    //         break;
-    //     }else{
-    //         alert("Attackers win!");
-    //     };
-    // }
 
     for(var i = 0; i < document.getElementById("mainBoard").childElementCount; i++){
-        if(Array.from(document.getElementById("mainBoard").children[i].children).includes(document.getElementById("king"))) noKing = false;  
+        if(Array.from(document.getElementById("mainBoard").children[i].children).includes(document.getElementById("king"))) noKing = false; 
     }
-
+    
+    // Find position of king and see if he's in one of the corners.
+    if(!(document.getElementById("king") === null)){
+        if(document.getElementById("1").hasChildNodes() && document.getElementById("1").children[0].id.toString() == "king") kingEscaped = true;
+        if(document.getElementById("11").hasChildNodes() && document.getElementById("11").children[0].id.toString() == "king") kingEscaped = true;
+        if(document.getElementById("111").hasChildNodes() && document.getElementById("111").children[0].id.toString() == "king" ) kingEscaped = true;
+        if(document.getElementById("121").hasChildNodes() && document.getElementById("121").children[0].id.toString() == "king") kingEscaped = true;
+    }
+     
+    // range(111, 121).includes(parseInt(document.getElementById("king").parentElement.id))
+    // arrayColumn(hnefataflPos, 0).includes(parseInt(document.getElementById("king").parentElement.id))
+    // arrayColumn(hnefataflPos, 10).includes(parseInt(document.getElementById("king").parentElement.id))
+    // (range(1, 11).includes(parseInt(document.getElementById("king").parentElement.id))
+    
     if(noKing){
         alert("Attackers win!");
-        while (myNode.lastElementChild) {
-            removeEventListener(getEventListeners(myNode.lastElementChild), myNode.lastElementChild);
-        }
     }
     else if(kingEscaped){
         alert("Defenders win!");
@@ -604,3 +604,52 @@ function resetGame(){
         assembleHnefataflBoard();
     }
 }
+
+function changePanel(name){
+    switch(name){
+        case 'hnerith':
+            var elems = document.getElementsByClassName("hnefatafl");
+            for (var i = 0; i < elems.length; i++ ) {
+                if (elems[i].style.display === "none") {
+                    elems[i].style.display = "block";
+                } 
+                else{
+                    elems[i].style.display = "none";
+                }    
+            }
+            break;
+        case 'mechturk':
+            var elems = document.getElementsByClassName("mechanical-turk");
+            for (var i = 0; i < elems.length; i++ ) {
+                if (elems[i].style.display === "none") {
+                    elems[i].style.display = "block";
+                } 
+                else{
+                    elems[i].style.display = "none";
+                }    
+            }
+            break;
+        case 'chessplayer':
+            var elems = document.getElementsByClassName("chess-player");
+            for (var i = 0; i < elems.length; i++ ) {
+                if (elems[i].style.display === "none") {
+                    elems[i].style.display = "block";
+                } 
+                else{
+                    elems[i].style.display = "none";
+                }    
+            }
+            break;
+        case 'deepblue':
+            var elems = document.getElementsByClassName("deep-blue");
+            for (var i = 0; i < elems.length; i++ ) {
+                if (elems[i].style.display === "none") {
+                    elems[i].style.display = "block";
+                } 
+                else{
+                    elems[i].style.display = "none";
+                }    
+            }
+            break;
+    }
+};

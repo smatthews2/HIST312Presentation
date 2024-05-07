@@ -7,7 +7,24 @@
         <script src="script.js"></script>
     </head>
     <body>
-        <h1 id="textlogo">Rithmomachia, the "Battle of Numbers"</h1>
+        <h1 id="textlogo">Renaissance Board Games, The Mechanical Turk, and the Soviet Chess Battleground</h1>
+        <h2 id="author">Sebastian Matthews — May 7th, 2024</h2>
+        
+        <div class="timeline">
+            <div class="event up" onclick="changePanel('hnerith')">
+                <div class="detail">Hnefatafl and Rithmomachia</div>
+            </div>
+            <div class="event down" onclick="changePanel('mechturk')">
+                <div class="detail">The Mechanical Turk</div>
+            </div>
+            <div class="event up" onclick="changePanel('chessplayer')">
+                <div class="detail"><em>El Ajedrecista</em>, the "Chess Player"</div>
+            </div>
+            <div class="event down" onclick="changePanel('deepblue')">
+                <div class="detail">Kaissa and Deep Blue</div>
+            </div>
+        </div>
+        
         <div id="container">
             <div id="main">
                 <!-- <img src="Rithmomachia.png" alt="Rithmomachia Board"> -->
@@ -23,26 +40,159 @@
                 </div>
             </div>
             <div id="aside">
-                <h1>POTENTIAL QUESTIONS</h1>
-                <h2>What is Rithmomachia?</h2>
-                <p>Rithmomachia is a game that is highly similar to chess; two players of the intellectual elite would take turns to move pieces around an 8x16 board and try to claim victory in around five different ways for the sake of learning Boethian mathematics.
-                    See more <a href="https://www.boardspace.net/rithmomachy/english/rules.html">here</a> for game rules.
-                </p>
-                
-                <h2>What were some popular(or unpopular) games in the Renaissance?</h2>
-                <p>
-                    Biribi, otherwise known as <em>Birissi</em> or <em>Cavagnole</em>, was a gambling game that found itself to be akin to roulette or craps; players place pieces on a numbered tile and make bets, where a ticket is then drawn by a dealer. Whoever's selected tile with the matching ticket outcome would take home the spoils.
-                    <br>
-                    <br> Frussi, now known as <em>Primiera</em>, is a four-of-a-kind card matching game; players each draw four cards and can either bid, stake, or pass. Whenever one stakes, they only cover the last bid. Whoever matches four cards or has the highest card values wins.
-                    <br>
-                    <br> Chess, the most documented game in the modern world! Thousands of chess compendiums would be written at this time.
-                    <br>
-                    <br> Acting games like <em>Le Jeu d'Aventure</em>("The Game of Adventure"), <em>Ragman's Roll</em>, <em>Commedia dell'arte</em>, or <em>Hearts</em> were popular with the masses; players would take poems written out on scrolls with ribbons or tarot cards and assume the role of the figure described or imagined.
-                </p>
+                <div id="description">
+                    <div class="hnefatafl">
+                        <h1>Hnefatafl and Rithmomachia</h1>
+                        
+                        <h2>What is Rithmomachia? What is Hnefatafl?</h2>
+                        <p>Rithmomachia is a game that is highly similar to chess; two players of the intellectual elite would take turns to move pieces around an 8x16 board and try to claim victory in around five different ways for the sake of learning Boethian mathematics.
+                            See more <a href="https://www.boardspace.net/rithmomachy/english/rules.html">here</a> for game rules. 
+                            <br>
+                            <br> Hnefatafl was another board game that was popular during the Renaissance, with the goal of the attackers(in black) being the capture of the defenders' king(the red square). 
+                            For the defenders to win, the king must escape to a corner of the board.
+                            After the introduction of chess, both of these games "died out" or saw huge declines in popularity.
+                        </p>
+                        
+                        <h2>What were some popular(or unpopular) games in the Renaissance?</h2>
+                        <p>
+                            Biribi, otherwise known as <em>Birissi</em> or <em>Cavagnole</em>, was a gambling game that found itself to be akin to roulette or craps; players place pieces on a numbered tile and make bets, where a ticket is then drawn by a dealer. Whoever's selected tile with the matching ticket outcome would take home the spoils.
+                            <br>
+                            <br> Frussi, now known as <em>Primiera</em>, is a four-of-a-kind card matching game; players each draw four cards and can either bid, stake, or pass. Whenever one stakes, they only cover the last bid. Whoever matches four cards or has the highest card values wins.
+                            <br>
+                            <br> Chess, the most documented game in the modern world! Thousands of chess compendiums would be written at this time.
+                            <br>
+                            <br> Acting games like <em>Le Jeu d'Aventure</em>("The Game of Adventure"), <em>Ragman's Roll</em>, <em>Commedia dell'arte</em>, or <em>Hearts</em> were popular with the masses; players would take poems written out on scrolls with ribbons or tarot cards and assume the role of the figure described or imagined.
+                        </p>
 
-                <h2>What other forms of entertainment were popular during the Renaissance?</h2>
-                <p>Theatre and poetry were the main types of public entertainment; automata presence in theatrical performances were also noted, as clockmakers would construct machines for plays and were often used for special effects, <a href="https://www.youtube.com/watch?v=jiVKnlXcDDg">such as...</a></p>    
-                <img src="Rithmomachia.png" alt="Rithmomachia Board"> <img src="biribi.png" alt="Biribi Board">
+                        <h2>What other forms of entertainment were popular during the Renaissance?</h2>
+                        <p>Theatre and poetry were the main types of public entertainment; automata presence in theatrical performances were also noted, as clockmakers would construct machines for plays and were often used for special effects, <a href="https://www.youtube.com/watch?v=jiVKnlXcDDg">such as...</a></p>    
+                    </div>
+                    <div class="mechanical-turk" style="display: none;">
+                        <h1>The Mechanical Turk</h1>
+                        <h2>What was the Mechanical Turk?</h2>
+                        <p>
+                            The Mechanical Turk was a fake chess engine made by Hungarian inventor Wolfgang von Kempelen, revealed in 1770 as the world's first "autonomous" chess robot that could complete the knight's tour, a similar problem to the bridges of Konigsburg. 
+                            The machine was destroyed in an 1854 fire, with Kempelen's secret being discovered years later.
+                            This machine is not to be confused for the Amazon service, which offers offshore labor for online products that are supposed to be "machine operated," such as auto-paying stores.
+                        </p>
+
+                        <h2>Were there more Mechanical Turk inventions?</h2>
+                        <p>
+                           Yes! Ajeeb the Magnificent was another pseudo-automaton that was presented to University of Westminister, otherwise known as the Royal Polytechnical Institute at the time, by the cabinet maker Charles Hooper in 1868. 
+                           Mephisto, another fake machine in 1876 constructed by the prosthetics artisan Charles Godfrey Gumpel (c.1835 - 1921), was remote-operated by electromechanics and would always allow himself to lose to women to shake their hand. 
+                           Isidor Gunsberg, a Hungarian chess master, would mainly operate him; Jean Taubenhaus would control him for Paris' World's Fair in 1889, being destroyed after and its remains in an unknown location.
+                        </p>
+                    </div>
+
+                    <div class="chess-player" style="display: none;">
+                        <h1><em>El Ajedrecista</em>, the Chess Player</h1>
+                        <h2>What was the "Chess Player"?</h2>
+                        <p>
+                            <em>El Ajedrecista</em> was the first analog chess automata invented by Leonardo Torres Quevedo in 1912, operating via an electrical circuit that saved board positions. 
+                            His son, Gonzalo, would then make an improved model in 1920 that would celebrate announce its victory, using electromagnets under the table to move pieces.
+                            It was able to identify illegal moves and play an endgame with white that would result in checkmate every time, but cannot do so in the minimum number of moves or in the alloted 50-move draw rule. 
+                            First presented at the University of Paris in 1914, the machine beat the Polish grandmaster Savielly Tartakower at the Paris Cybernetic Conference in 1951, making him the first grandmaster to lose against a robot. 
+                        </p>
+                    </div>
+
+                    <div class="deep-blue" style="display: none;">
+                        <h1>Kaissa, Deep Blue, and the Cold War's Chess Proxy War</h1>
+                        <h2>When did the advent of chess computing begin?</h2>
+                        <p>
+                            After the invention of the first modern computers by Allied scientists, Alan Turing and Claude Shannon would go on to write papers about programs that could play against people and make the first chess algorithms, despite the lack of effective hardware. 
+                            Turing's colleague, Dietrich Prinz, would then create a chess program that was able solve mate in two on the Ferranti Mark 1.
+                        </p>
+                        <h2>What made chess such a contentious "warzone"?</h2>
+                        <p>
+                            Bobby Fischer's games were broadcasted all over the world, consistently beating Soviet-trained chess experts and being hunted by the US government for refusing to defend his title.
+                            As noted by Feng-hsiung Hsu, one of the lead programmers of Deep Blue, "Computer chess was a highly competitive research field—scientific rivalry was as strong and heated as in the DNA research area[;] the final competition with Garry Kasparov, the World Chess Champion, was also an extremely serious affair".
+                            Additionally, the fear of a possible AI takeover became closer to a reality, which has become especially more evident in the rise of language models and digital artists. 
+                            The idea of leisure and entertianment, a once distinctly human thing, became analytical and deterministic in the eye of "man as a toolmaker," soon to be solved and mastered by the unliving.
+                            
+                        </p>
+                        <h2>How is this even related to the Renaissance?</h2>
+                        <p>
+                            The ostensible change over time, combined with the intermingling of invention and idealism, makes the game of chess and our approach to solve its problems deeply tied to its early-modern roots.
+
+                        </p>
+                    </div>
+                </div>
+                <div id="gallery">
+                    <h1>Gallery</h1>
+                    <div class="hnefatafl">
+                        <figure>
+                            <img src="Resources/rithmomachia.png" alt="Rithmomachia Board"> 
+                            <figcaption><em>Fig. 1a - An initial set-up of Rithmomachia.</em></figcaption>
+                        </figure>
+                        
+                        <figure>
+                            <img src="Resources/biribi.png" alt="Biribi Board">
+                            <figcaption><em>Fig. 1b - A Biribi board.</em></figcaption>
+                        </figure>
+
+                        <figure>
+                            <img src="Resources\tawlbwrdd.png" alt="Tawlbwrdd Board">
+                            <figcaption><em>Fig. 1c - An initial set-up of Tawlbwrdd, a Welsh variant on Hnefatafl.</em></figcaption>
+                        </figure>
+                    </div>
+
+                    <div class="mechanical-turk" style="display: none;">
+                        <figure>
+                            <img src="Resources/mechanical-turk-1.png" alt="Mechanical Turk Cross-Section">
+                            <figcaption><em>Fig. 2a - The interior of the Mechanical Turk from an 1826 print, showing how the operator would enter. There were a variety of possible configurations that the operator could have utilized, but Kempelen's method remains a mystery.</em></figcaption>
+                        </figure>
+
+                        <figure>
+                            <img src="Resources/mechanical-turk-2.jpg" alt="Mechanical Turk Inner-Workings">
+                            <figcaption><em>Fig. 2b - A colorized diagram of the "mechanics" of the Turk. The illustrator, Joseph Friedrich Freiherr von Racknitz, made a series of miscalculations and thereby presents us with an impossible design.</em></figcaption>
+                        </figure>
+                        
+                        <figure>
+                            <img src="Resources/ajeeb.jpg" alt="Ajeeb the Wonderful">
+                            <figcaption><em>Fig. 2c - Ajeeb the Wonderful, 1868.</em></figcaption>
+                        </figure>   
+                    </div>
+                    
+                    <div class="chess-player" style="display: none;">
+                        <figure>
+                            <img src="Resources/gonzalo-paris-1951.jpg" alt="Gonzalo at Paris' Cybernetic Conference in 1951">
+                            <figcaption><em>Fig. 3a - Gonzalo(left), Quevedo's son, at Paris' Cybernetic Conference in 1951</em></figcaption>
+                        </figure>
+                        
+                        <figure>
+                            <img src="Resources/chess-player-1.jfif" alt="El Ajedrecista">
+                            <figcaption><em>Fig. 3b - The interior of the machine.</em></figcaption>
+                        </figure>
+
+                        <figure>
+                            <img src="Resources/chess-player-2.jfif" alt="El Ajedrecista #2">
+                            <figcaption><em>Fig. 3c - The interior of Gonzalo's improved machine.</em></figcaption>
+                        </figure>
+                    </div>
+
+                    <div class="deep-blue" style="display: none;">
+                        <figure>
+                            <img src="Resources/caissa.jpg" alt="Caissa">
+                            <figcaption><em>Fig. 4a - Caissa, the goddess of chess, first mentioned by the Renaissance Italian poet Hieronymous Vida.</em></figcaption>
+                        </figure>
+
+                        <figure>
+                            <img src="Resources/ferranti-mark-1.gif" alt="Ferranti Mark 1">
+                            <figcaption><em>Fig. 4b - The Ferranti Mark 1 console, which stored a whopping 10,240 bits of information in its main memory on Williams-Kilburn tubes; its memory held eight tubes, with each tube holding a page of 64 words. Most machines now carry 256 GB of storage, with 4-8 being dedicated to the OS and minor applications.</em></figcaption>
+                        </figure>
+
+                        <figure>
+                            <img src="Resources/chaos-v-kaissa.jpg" alt="Kaissa Game">
+                            <figcaption><em>Fig. 4c CHAOS vs Kaissa at the 1st World Computer Chess Championship in Stockholm, 1974.</em></figcaption>
+                        </figure>
+                        
+                        <figure>
+                            <img src="Resources/deep-blue.jpg" alt="Deep Blue Chess Robot">
+                            <figcaption><em>Fig. 4d - IBM's Chess Robot, Deep Blue. This model would defeat Garry Kasparov in May 1997.</em></figcaption>
+                        </figure>
+                    </div>
+                    
+                </div>
             </div>
         </div>
         <p style="text-align: center; font-size: 12pt;">
